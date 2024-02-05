@@ -64,6 +64,7 @@ def test_split(data,attr,value=1):
             left.append(row)
         else:
             right.append(row)
+
     return np.array(left,ndmin=2), np.array(right,ndmin=2)
 
 ##count label of a dataset
@@ -84,10 +85,12 @@ def I(data,attr,value):
     """
     
     left_data,right_data=test_split(data,attr,value)
-  
-    tup_list=[(left_data.shape[0] / len(data[:,attr]), H(left_data[:,-1])),(right_data.shape[0] / len(data[:,attr]), H(right_data[:,-1]))]
-    H_Y_A = np.array([i[0] * i[1] for i in tup_list])
-    I = H(data[:,-1]) - np.sum(H_Y_A)
+    if left_data.size ==0 or right_data.size ==0:
+        I=0 
+    else:
+        tup_list=[(left_data.shape[0] / len(data[:,attr]), H(left_data[:,-1])),(right_data.shape[0] / len(data[:,attr]), H(right_data[:,-1]))]
+        H_Y_A = np.array([i[0] * i[1] for i in tup_list])
+        I = H(data[:,-1]) - np.sum(H_Y_A)
     return I
 
 ##majority voter
@@ -113,7 +116,7 @@ class Node:
         self.right = None
 
         self.attr = attr
-        self.labels = data[:,-1]  #label of data
+        self.labels = np.array(data,ndmin=2)[:,-1]  #label of data
         self.vote = None    # final label after majority vote if the node is leaf node
         self.data = data    # data :np.array  input dataset
         self.depth = depth  # depth of the current node ;for root node ,depth=0
@@ -134,14 +137,14 @@ class Node:
         
 def build_tree(data,attr_dic,max_depth,depth=0,subclass=None):
     #base case -pure -max_depth -attr run out
-    if depth==max_depth or len(attr_dic)==0:
+    if depth==max_depth or len(attr_dic)==0 or attr_dic is None:
         node=Node(data,depth=depth,subclass=subclass)
         node.vote_leaf_node()
         return node
-    if data is None:
-        return
+    if data is None or type(data) is int:
+        return 
     unique=np.unique(data[:,-1])
-    if len(unique)==1:
+    if len(unique)==1 :
         node=Node(data,depth=depth,subclass=subclass)
         node.vote_leaf_node()
         return node
@@ -149,8 +152,8 @@ def build_tree(data,attr_dic,max_depth,depth=0,subclass=None):
     #recuision:
     #current node
     # find the best split
-    best_attr=0
-    best_gain=-1
+    best_attr=None
+    best_gain=-1000
     best_left=0
     best_right=0
     best_value=0
@@ -168,13 +171,18 @@ def build_tree(data,attr_dic,max_depth,depth=0,subclass=None):
                         best_value=value
                         best_left,best_right=test_split(data,attr,value)
 
+
     node=Node(data,attr=best_attr,depth=depth,value=best_value,subclass=subclass)
 
     left_attr = attr_dic.copy()
-
-    del left_attr[best_attr] 
     right_attr = attr_dic.copy()
-    del right_attr[best_attr] 
+    if best_attr is not None:
+        del left_attr[best_attr] 
+        del right_attr[best_attr] 
+    else: 
+        node=Node(data,depth=depth,subclass=subclass)
+        node.vote_leaf_node()
+        return node
 
     node.left=build_tree(best_left,left_attr,max_depth=max_depth,depth=depth+1,subclass=0)
     node.right=build_tree(best_right,right_attr,max_depth=max_depth,depth=depth+1,subclass=1)           
@@ -195,10 +203,14 @@ def test_tree(tree,test_data):
     else:
         #current node -go down
         attr_value=test_data[tree.attr]
-        if attr_value < tree.value:
+        print(attr_value)
+        if attr_value < 1:
             return test_tree(tree.left,test_data)
         else:
             return test_tree(tree.right,test_data)
+    
+
+        
 def collect_test(tree,test_dataset):
     """
     collect all the prediction of the test data point
