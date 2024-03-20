@@ -329,7 +329,7 @@ class Linear:
         self.b -= self.lr * self.db
         p=np.hstack((self.W,self.b))
         with open('para_data.csv', 'a') as file:
-            np.savetxt(file, p, delimiter=',',fmt='%.3f')
+            np.savetxt(file, p)
 
         return 
 
