@@ -1,0 +1,39 @@
+program: hw3.py
+method: bayes
+metric:
+  goal: minimize
+  name: val_dist
+parameters:
+  root: 
+    value: 'hw3p2'
+  data_path:  
+    value : "/global/cfs/cdirs/m3578/jiayihua/11785/hw3/11785-f24-hw3p2"
+  run_name: 
+    value: 'cnn_lstm_reduce'
+  latest_checkpoint: 
+    value: 'checkpoint.pth'
+  batch_size: 
+    value: 128
+  channels:
+    value: [32, 64, 128, 256]
+  load:
+    value: false
+  # parameters to be tuned
+  lstm_dropout:
+    values: [0.2, 0.3, 0.4]
+  num_layers: 
+    values: [3, 4, 5]
+  hidden_dim: 
+    values: [256, 512]
+  lr:
+    values: [0.001, 0.002]
+  epochs:
+    value: 50
+  beam_width: 
+    values: [2, 3, 4, 5]
+
+early_terminate:
+  type: hyperband
+  s: 2
+  eta: 3
+  max_iter: 50

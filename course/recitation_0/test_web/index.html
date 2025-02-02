@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Search Engine -->
+    <header class="search-header">
+        <div class="container">
+            <form class="search-form">
+                <input type="text" placeholder="Search for products..." name="search">
+                <button type="submit">Search</button>
+            </form>
+            <!-- Add this navigation menu -->
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Big Header -->
+    <div class="main-header">
+        <h1>Welcome to Sports Store</h1>
+        <p>Your one-stop shop for all sports products!</p>
+    </div>
+
+    <!-- Product Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2>Categories</h2>
+            <ul>
+                <li><a href="#">Footwear</a></li>
+                <li><a href="#">Apparel</a></li>
+                <li><a href="#">Accessories</a></li>
+                <li><a href="#">Equipment</a></li>
+                <li><a href="#">Outdoor</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact Box -->
+    <section class="contact-box">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

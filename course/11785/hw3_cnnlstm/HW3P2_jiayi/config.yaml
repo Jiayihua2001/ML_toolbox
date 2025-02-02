@@ -1,0 +1,12 @@
+datapath : "/global/cfs/cdirs/m3578/jiayihua/11785/hw3/11785-f24-hw3p2"
+batch_size: 128
+lr: 0.002
+epochs: 100
+lstm_dropout: 0.4
+num_layers: 4
+hidden_dim: 512
+beam_width: 2
+channels: [32, 64, 128, 256]
+root: 'hw3p2'
+run_name: 'cnn_lstm_reduce'
+latest_checkpoint: 'checkpoint.pth'

@@ -1,0 +1,33 @@
+### It is easy to run the jupyter notebook. The wandb will save articrafts automatically if the model have better performance.I also use wandb sweep to tune the parameters
+
+## Architecture:
+
+The MLP is a 8-layer diamond like structure
+    with [1024,2048,3072,2048,1024,512,256,128] neuron in each layers
+    with Batch Norm , SiLU and dropout layer in between.
+    ### I also tried ReLU and Leaky ReLU ,but SiLU out perform other activation functions.
+
+## Hyperparameters
+
+config = {
+    "model"         : "8-MLP",
+    'epochs'        : 100,        
+    'batch_size'    : 1024,
+    'context'       : 20,
+    'init_lr'       : 0.00372,
+    "dropout_rate"  : 0.5,
+    "activation"    :SiLU,
+    "scheduler"     : CosineAnnealingLR(T_max= config['epochs']),
+    "loss_function" : CrossEntropyLoss,
+    "optimizer"     : Adam,
+    'architecture'  : '8_layer_diamond'
+    # Add more as you need them - e.g dropout values, weight decay, scheduler parameters
+}
+
+### I did train more than 100 epochs before the final submission, because I have tried to decrease my dropout rate to 0.3 then to 0.2 to train few epochs to get better performance.
+
+## Final performace
+For training on the full dataset:
+training acc: 87.5%
+val acc :85.4%
+test acc : 85.3%

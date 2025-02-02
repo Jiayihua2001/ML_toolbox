@@ -1,0 +1,21 @@
+model: "ConvNet"
+batch_size: 256 # Increase this if your GPU can handle it
+lr: 0.004
+epochs: 100  # 20 epochs is recommended ONLY for the early submission - you will have to train for much longer typically.
+label_smoothing: 0.1  # [0.1,0.2]
+drop_rate: 0.2
+layer_scale: 0.000001
+depths:
+  - 3
+  - 3
+  - 9
+  - 3
+dims:
+  - 96
+  - 192
+  - 384
+  - 768
+weight_decay : 0.05
+data_dir: "/global/cfs/cdirs/m3578/jiayihua/11785/data/11-785-f24-hw2p2-verification/cls_data"  # TODO
+data_ver_dir: "/global/cfs/cdirs/m3578/jiayihua/11785/data/11-785-f24-hw2p2-verification/ver_data"  # TODO
+checkpoint_dir: "checkpoint"  # TODO

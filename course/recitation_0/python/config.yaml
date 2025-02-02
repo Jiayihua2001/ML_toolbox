@@ -1,0 +1,5 @@
+# basic setting
+model : test
+lr : 0.1
+batch_size : 3
+epochs : 10
